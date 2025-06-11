@@ -4,7 +4,7 @@ from datetime import datetime
 import sqlite3
 
 
-URL = "http://programmer100.pythonanywhere.com/tours/"
+URL = "http://programmer100.pythonanywhere.com/"
 
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}   
@@ -30,10 +30,9 @@ def extract(source):
 #       file.write(line)
 #stores the data in the database
 def store(extracted):
-    row = extracted.split(",")
-    row = [item.strip() for item in row] #strip the spaces
+    row = datetime.now().strftime("%y-%m-%H-%M-%S")
     cursor = sql_connection.cursor()
-    cursor.execute("INSERT INTO temperatures VALUES (?, ?)", row)
+    cursor.execute("INSERT INTO temperatures VALUES (?, ?)", (row, extracted))
     sql_connection.commit()  #commit the changes to the database
 
 #reads the db
